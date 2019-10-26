@@ -1,0 +1,32 @@
+---
+ - hosts: dev
+   tags: dev
+   tasks:
+   - name: pull the image from Docker rigistry
+     raw: docker pull meghanath/test1:2
+   - name: pull the image from Docker rigistry
+     raw: docker pull meghanath/test2:3
+   - name: Remove the container if present
+     raw: docker rm -f c2 c3
+     ignore_errors: true
+   - name: spin up container
+     raw: docker run -dti --name c2 -p 98:80 meghanath/test1:2 /bin/bash
+   - name: spin up container
+     raw: docker run -dti --name c3 -p 97:80 meghanath/test2:3 /bin/bash
+
+
+ - hosts: qa
+   tags: qa
+   tasks:
+   - name: pull the image from Docker rigistry
+     raw: docker pull meghanath/test1:2
+   - name: pull the image from Docker rigistry
+     raw: docker pull meghanath/test2:3
+   - name: Remove the container if present
+     raw: docker rm -f c2 c3
+     ignore_errors: true
+   - name: spin up container
+     raw: docker run -dti --name c2 -p 98:80 meghanath/test1:2 /bin/bash
+   - name: spin up container
+     raw: docker run -dti --name c3 -p 97:80 meghanath/test2:3 /bin/bash
+
